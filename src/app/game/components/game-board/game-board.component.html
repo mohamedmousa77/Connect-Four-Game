@@ -1,0 +1,35 @@
+<!-- <div class="board">
+  <div
+    class="column"
+    *ngFor="let column of board[0]; let colIndex = index"
+    (click)="handleColumnClick(colIndex)"
+  >
+    <div
+      class="cell"
+      *ngFor="let row of board; let rowIndex = index"
+      [ngClass]="{
+        'player-1': board[rowIndex][colIndex] === 1,
+        'player-2': board[rowIndex][colIndex] === 2
+      }"
+    ></div>
+  </div>
+</div> -->
+
+<div class="board">
+  <div
+    class="column"
+    *ngFor="let column of board[0]; let colIndex = index"
+    (click)="handleColumnClick(colIndex)"
+  >
+    <div class="cell" *ngFor="let row of board; let rowIndex = index">
+      <app-disc [player]="board[rowIndex][colIndex]"></app-disc>
+    </div>
+  </div>
+</div>
+
+
+<div class="winner-message" *ngIf="gameService.winner">
+  🎉 Giocatore {{ gameService.winner }} ha vinto!
+</div>
+
+<button (click)="resetGame()">Restart</button>

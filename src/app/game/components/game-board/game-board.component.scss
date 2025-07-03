@@ -1,0 +1,26 @@
+.board {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 20px;
+  background: #ffffff;
+  border: 5px solid #000000;
+  border-radius: 10px;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.column {
+  display: flex;
+  flex-direction: column-reverse; // importante per effetto "caduta"
+  gap: 4px;
+  cursor: pointer;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: #543fd7; // colore slot vuoto
+  border-radius: 50%;
+  position: relative;
+}
