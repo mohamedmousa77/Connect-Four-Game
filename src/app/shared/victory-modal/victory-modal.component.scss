@@ -1,0 +1,75 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px); // Sfocatura moderna
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.modal-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem 4rem;
+  max-width: 90%;
+  width: 450px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  animation: zoomIn 0.4s ease;
+}
+
+.emoji {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #4a148c;
+  margin-bottom: 2rem;
+}
+
+.play-again-btn {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #e91e63;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

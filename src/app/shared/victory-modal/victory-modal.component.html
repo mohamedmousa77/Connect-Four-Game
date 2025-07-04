@@ -1,0 +1,10 @@
+<div class="modal-backdrop" *ngIf="winner !== null">
+  <div class="modal-card">
+    <div class="emoji">🎉</div>
+    <h2 class="title">Giocatore {{ winner }} ha vinto!</h2>
+
+    <button class="play-again-btn" (click)="restartGame()">
+      🔁 Gioca di nuovo
+    </button>
+  </div>
+</div>

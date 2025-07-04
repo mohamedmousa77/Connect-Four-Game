@@ -1,12 +1,3 @@
-<!-- <div class="turn-timer">
-  <ng-container *ngIf="!showTimeoutMessage; else timeout">
-    {{ timeLeft }}s
-  </ng-container>
-
-  <ng-template #timeout>
-    <span class="timeout-msg">⏱️ Tempo scaduto! Cambio turno...</span>
-  </ng-template>
-</div> -->
 <div class="circle-timer">
   <svg width="100" height="100">
     <circle
@@ -32,3 +23,12 @@
   </svg>
   <div class="time">{{ timeLeft }}s</div>
 </div>
+
+<!-- <div class="turn-box" *ngIf="!gameService.gameOver">
+  <div class="label">
+    ⏱️ Player {{ gameService.currentPlayer }}'s turn
+  </div>
+  <div class="timer-circle">
+    {{ timeLeft }}s
+  </div>
+</div> -->

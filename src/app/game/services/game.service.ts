@@ -21,6 +21,7 @@ export class GameService {
   gameOver = false;
   boardReset$ = new Subject<void>();
   turnChange$ = new Subject<void>();
+  
   winningCells: { row: number; col: number }[] = [];
 
   constructor() {
@@ -38,6 +39,8 @@ export class GameService {
     
     this.boardReset$.next(); // notifica reset
     this.turnChange$.next(); // resetta anche il timer
+
+    this.winningCells = [];
   }
 
   getBoard(): Cell[][] {

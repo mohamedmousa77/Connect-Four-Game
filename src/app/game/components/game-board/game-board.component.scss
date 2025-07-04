@@ -1,13 +1,14 @@
 .board {
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 6px;
   padding: 20px;
   background: #ffffff;
   border: 5px solid #000000;
-  border-radius: 10px;
+  border-radius: 25px;
   width: max-content;
   margin: 0 auto;
+  box-shadow: 0 12px 0 #000;
 }
 
 .column {
@@ -18,11 +19,13 @@
 }
 
 .cell {
-  width: 60px;
-  height: 60px;
+  width: 75px;
+  height: 75px;
   background-color: #543fd7; // colore slot vuoto
   border-radius: 50%;
   position: relative;
+  box-shadow: inset -6px -6px 0 #000000; // ombra interna nera
+  transition: 0.2s ease;
 }
 .column:hover {
   transform: scale(1.05);

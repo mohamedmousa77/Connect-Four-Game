@@ -11,7 +11,9 @@
   <div class="main">
     
     <!-- Player 1 -->
-    <div class="player-panel">
+    <div 
+    [ngClass]="{ 'active-player': gameService.currentPlayer === 1 }"
+    class="player-panel">
       <div class="player-icon">😊</div>
       <div class="label">PLAYER 1</div>
       <div class="score">{{ gameService.score[1] }}</div>
@@ -21,7 +23,9 @@
     <app-game-board></app-game-board>
 
     <!-- Player 2 -->
-    <div class="player-panel">
+    <div 
+    [ngClass]="{ 'active-player': gameService.currentPlayer === 2 }"
+    class="player-panel">
       <div class="player-icon">😎</div>
       <div class="label">PLAYER 2</div>
       <div class="score">{{ gameService.score[2] }}</div>
@@ -33,6 +37,8 @@
     🎯 Player {{ gameService.currentPlayer }}'s turn
   </div>
   <app-turn-timer></app-turn-timer>
-
-
 </div>
+ <app-victory-modal
+  [winner]="gameService.winner"
+  (playAgain)="resetGame()">
+</app-victory-modal>

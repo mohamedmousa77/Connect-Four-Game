@@ -16,17 +16,29 @@
   justify-content: space-between;
   width: 100%;
   max-width: 900px;
+}
 
-  .menu-btn,
-  .restart-btn {
-    background-color: #6b3fc6;
-    border: none;
-    color: white;
-    font-weight: bold;
-    padding: 0.6rem 1.5rem;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 3px 0 #000;
+.menu-btn,  .restart-btn{
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  background: #7b5be7;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 5px 0 #3b2e93;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 #3b2e93;
+  }
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 0 #3b2e93;
   }
 }
 
@@ -88,4 +100,10 @@
   .board {
     transform: scale(0.9);
   }
+}
+
+.active-player {
+  background: white; // leggero highlight giallo
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #ffc107;
 }
