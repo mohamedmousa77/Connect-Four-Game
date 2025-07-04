@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject, subscribeOn } from 'rxjs';
 
 export type Player = 1 | 2 | null;
 export type Cell = Player;
@@ -11,9 +12,10 @@ export class GameService {
 
   board: Cell[][] = [];
   currentPlayer: Player = 1;
-
   winner: Player = null;
   gameOver = false;
+  boardReset$ = new Subject<void>();
+  turnChange$ = new Subject<void>();
   constructor() {
     this.initBoard();
   }
@@ -25,6 +27,10 @@ export class GameService {
     this.currentPlayer = 1;
     this.winner = null;
     this.gameOver = false;
+    this.boardReset$.next();
+    
+    this.boardReset$.next(); // notifica reset
+    this.turnChange$.next(); // resetta anche il timer
   }
 
   getBoard(): Cell[][] {
@@ -32,7 +38,10 @@ export class GameService {
   }
 
   switchPlayer() {
+    // console.log('switch player called!');
     this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    // console.log('current player is:' + this.currentPlayer);
+    this.turnChange$.next(); 
   }
 
   dropDisc(colIndex: number): boolean {
@@ -41,7 +50,7 @@ export class GameService {
     for (let row = this.ROWS - 1; row >= 0; row--) {
       if (this.board[row][colIndex] === null) {
         this.board[row][colIndex] = this.currentPlayer;
-         // Verifica la vittoria subito dopo aver inserito il disco
+         //? Verifica la vittoria subito dopo aver inserito il disco
         if (this.checkWin(row, colIndex)) {
           this.winner = this.currentPlayer;
           this.gameOver = true;
@@ -73,11 +82,12 @@ export class GameService {
     // Check indietro
     count += this.countDirection(row, col, -dr, -dc, player);
 
-    if (count >= 4) return true;
+    if (count >= 6) return true;
   }
 
   return false;
   }
+
   private countDirection(
     row: number,
     col: number,

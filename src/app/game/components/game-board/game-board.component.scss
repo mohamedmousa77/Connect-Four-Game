@@ -24,3 +24,20 @@
   border-radius: 50%;
   position: relative;
 }
+.column:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+.turn-indicator {
+  font-weight: bold;
+  font-size: 1.5rem;
+
+  &.player-1 {
+    color: #ff5678;
+  }
+
+  &.player-2 {
+    color: #ffc72c;
+  }
+}

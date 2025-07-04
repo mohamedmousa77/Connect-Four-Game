@@ -1,0 +1,91 @@
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  background-color: #7b4ef3;
+  min-height: 100vh;
+  padding: 2rem;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+// Header
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 900px;
+
+  .menu-btn,
+  .restart-btn {
+    background-color: #6b3fc6;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.6rem 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #000;
+  }
+}
+
+// Main layout
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+// Player panel
+.player-panel {
+  background-color: white;
+  color: black;
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 4px 4px 0 #000;
+  font-weight: bold;
+
+  .player-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .score {
+    font-size: 2.2rem;
+    color: #543fd7;
+  }
+}
+
+// Turn box (in basso)
+.turn-box {
+  background-color: #ff5678;
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 4px 4px 0 #000;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .player-panel {
+    width: 80%;
+  }
+
+  .board {
+    transform: scale(0.9);
+  }
+}

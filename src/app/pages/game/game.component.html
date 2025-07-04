@@ -1,3 +1,38 @@
-<h1>Connect Four</h1>
+<div class="game-container">
 
-<app-game-board></app-game-board>
+  <!-- Header -->
+  <div class="header">
+    <button class="menu-btn"  (click)="toggleRules()">MENU</button>
+    <button class="restart-btn" (click)="resetGame()">RESTART</button>
+  </div>
+  <app-rules-modal *ngIf="showRules" (close)="toggleRules()"></app-rules-modal>
+
+  <!-- Main -->
+  <div class="main">
+    
+    <!-- Player 1 -->
+    <div class="player-panel">
+      <div class="player-icon">😊</div>
+      <div class="label">PLAYER 1</div>
+      <div class="score">0</div>
+    </div>
+
+    <!-- Board -->
+    <app-game-board></app-game-board>
+
+    <!-- Player 2 -->
+    <div class="player-panel">
+      <div class="player-icon">😎</div>
+      <div class="label">PLAYER 2</div>
+      <div class="score">0</div>
+    </div>
+  </div>
+
+  <!-- Turn display -->
+  <div class="turn-box">
+    🎯 Player {{ gameService.currentPlayer }}'s turn
+  </div>
+  <app-turn-timer></app-turn-timer>
+
+
+</div>

@@ -1,28 +1,20 @@
-<!-- <div class="board">
-  <div
-    class="column"
-    *ngFor="let column of board[0]; let colIndex = index"
-    (click)="handleColumnClick(colIndex)"
-  >
-    <div
-      class="cell"
-      *ngFor="let row of board; let rowIndex = index"
-      [ngClass]="{
-        'player-1': board[rowIndex][colIndex] === 1,
-        'player-2': board[rowIndex][colIndex] === 2
-      }"
-    ></div>
-  </div>
+<!-- <div class="turn-indicator" [ngClass]="{
+  'player-1': gameService.currentPlayer === 1,
+  'player-2': gameService.currentPlayer === 2
+}">
+  🎯 Player {{ gameService.currentPlayer }}'s turn
 </div> -->
 
 <div class="board">
   <div
     class="column"
     *ngFor="let column of board[0]; let colIndex = index"
-    (click)="handleColumnClick(colIndex)"
-  >
-    <div class="cell" *ngFor="let row of board; let rowIndex = index">
-      <app-disc [player]="board[rowIndex][colIndex]"></app-disc>
+    (click)="handleColumnClick(colIndex)">
+    <div class="cell" 
+    *ngFor="let rowIndex of rowIndices"
+      
+      >
+        <app-disc [player]="board[rowIndex][colIndex]"></app-disc>
     </div>
   </div>
 </div>
@@ -32,4 +24,4 @@
   🎉 Giocatore {{ gameService.winner }} ha vinto!
 </div>
 
-<button (click)="resetGame()">Restart</button>
+<!-- <button (click)="resetGame()">Restart</button> -->
