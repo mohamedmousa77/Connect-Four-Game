@@ -25,8 +25,10 @@ private sub: Subscription | undefined;
        this.sub = this.gameService.boardReset$.subscribe(() => {
       this.board = this.gameService.getBoard();
     });
-  
-    
+  }
+
+  isWinningCell(row: number, col: number): boolean {
+    return this.gameService.winningCells.some(cell => cell.row === row && cell.col === col);
   }
 
   onDestroy() {
@@ -34,12 +36,7 @@ private sub: Subscription | undefined;
   }
 
   handleColumnClick(colIndex: number) {
-    // console.log("Column index inserted: "+colIndex);
-    // const success = 
     this.gameService.dropDisc(colIndex);
-    // if (success) {
-    //   this.gameService.switchPlayer();
-    // }
   }
 
   resetGame() {

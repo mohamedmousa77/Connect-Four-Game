@@ -10,12 +10,19 @@ export class GameService {
   readonly ROWS = 6;
   readonly COLS = 7;
 
+  score = {
+    1: 0,
+    2: 0
+  };
+
   board: Cell[][] = [];
   currentPlayer: Player = 1;
   winner: Player = null;
   gameOver = false;
   boardReset$ = new Subject<void>();
   turnChange$ = new Subject<void>();
+  winningCells: { row: number; col: number }[] = [];
+
   constructor() {
     this.initBoard();
   }
@@ -54,6 +61,9 @@ export class GameService {
         if (this.checkWin(row, colIndex)) {
           this.winner = this.currentPlayer;
           this.gameOver = true;
+            if (this.currentPlayer) {
+              this.score[this.currentPlayer]++;
+            }
         } else {
           this.switchPlayer();
         }
@@ -83,10 +93,40 @@ export class GameService {
     count += this.countDirection(row, col, -dr, -dc, player);
 
     if (count >= 6) return true;
+
+    const line = [{ row, col }];
+
+    line.push(...this.getConnectedCells(row, col, dr, dc, player));
+    line.push(...this.getConnectedCells(row, col, -dr, -dc, player));
+
+    if (line.length >= 4) {
+      this.winningCells = line.slice(0, 4); // salva le prime 4
+      return true;
+    }
+
   }
 
   return false;
   }
+
+  private getConnectedCells(row: number, col: number, dr: number, dc: number, player: Player): { row: number; col: number }[] {
+  const connected = [];
+  let r = row + dr;
+  let c = col + dc;
+
+  while (
+    r >= 0 && r < this.ROWS &&
+    c >= 0 && c < this.COLS &&
+    this.board[r][c] === player
+  ) {
+    connected.push({ row: r, col: c });
+    r += dr;
+    c += dc;
+  }
+
+  return connected;
+}
+
 
   private countDirection(
     row: number,

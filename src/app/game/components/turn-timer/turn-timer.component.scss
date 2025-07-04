@@ -1,9 +1,40 @@
-.turn-timer {
-  background-color: #ff5678;
-  color: white;
-  padding: 0.6rem 1.5rem;
-  font-size: 1.5rem;
-  border-radius: 20px;
-  box-shadow: 3px 3px 0 #000;
-  font-weight: bold;
+// .turn-timer {
+//   background-color: #ff5678;
+//   color: white;
+//   padding: 0.6rem 1.5rem;
+//   font-size: 1.5rem;
+//   border-radius: 20px;
+//   box-shadow: 3px 3px 0 #000;
+//   font-weight: bold;
+//   min-width: 150px;
+//   text-align: center;
+
+//   .timeout-msg {
+//     animation: blink 0.4s infinite alternate;
+//     color: yellow;
+//   }
+
+//   @keyframes blink {
+//     from { opacity: 1; }
+//     to { opacity: 0.3; }
+//   }
+// }
+.circle-timer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+
+  svg {
+    transform: rotate(0deg);
+  }
+
+  .time {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: white;
+    font-size: 1.2rem;
+  }
 }

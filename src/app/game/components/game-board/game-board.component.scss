@@ -41,3 +41,16 @@
     color: #ffc72c;
   }
 }
+.cell.win-cell {
+  animation: pulseWin 0.8s infinite alternate;
+  box-shadow: 0 0 10px 3px yellow;
+}
+
+@keyframes pulseWin {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+}

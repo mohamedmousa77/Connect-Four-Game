@@ -1,16 +1,19 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { interval, Subscription } from 'rxjs';
 import { GameService } from '../../services/game.service';
 
 
 @Component({
   selector: 'app-turn-timer',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './turn-timer.component.html',
   styleUrl: './turn-timer.component.scss'
 })
 export class TurnTimerComponent implements OnInit, OnDestroy {
   timeLeft = 30;
+  showTimeoutMessage = false;
+
   private timerSub: Subscription | undefined;
   private turnSub: Subscription | undefined;
   private resetSub: Subscription | undefined;
@@ -46,14 +49,25 @@ export class TurnTimerComponent implements OnInit, OnDestroy {
       this.timeLeft--;
 
       if (this.timeLeft <= 0) {
+        this.showTimeoutMessage = true;
+          setTimeout(() => {
+            this.showTimeoutMessage = false;
+            this.gameService.switchPlayer(); // cambia il turno dopo timeout
+          }, 2000);
+
         this.stopTimer();
-        this.gameService.switchPlayer(); // forza passaggio turno
+        // this.gameService.switchPlayer(); // forza passaggio turno
       }
     });
   }
 
   stopTimer() {
     this.timerSub?.unsubscribe();
+  }
+
+  get dashOffset(): number {
+    const totalLength = 2 * Math.PI * 45; // ≈ 282.6
+    return totalLength * ((30 - this.timeLeft) / 30);
   }
   
   ngOnDestroy(): void {

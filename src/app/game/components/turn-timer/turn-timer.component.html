@@ -1,3 +1,34 @@
-<div class="turn-timer">
-  <span>{{ timeLeft }}s</span>
+<!-- <div class="turn-timer">
+  <ng-container *ngIf="!showTimeoutMessage; else timeout">
+    {{ timeLeft }}s
+  </ng-container>
+
+  <ng-template #timeout>
+    <span class="timeout-msg">⏱️ Tempo scaduto! Cambio turno...</span>
+  </ng-template>
+</div> -->
+<div class="circle-timer">
+  <svg width="100" height="100">
+    <circle
+      r="45"
+      cx="50"
+      cy="50"
+      stroke="#eee"
+      stroke-width="10"
+      fill="none"
+    />
+    <circle
+      r="45"
+      cx="50"
+      cy="50"
+      [attr.stroke-dashoffset]="dashOffset"
+      stroke="#ff5678"
+      stroke-width="10"
+      fill="none"
+      stroke-dasharray="282.6"
+      transform="rotate(-90 50 50)"
+      stroke-linecap="round"
+    />
+  </svg>
+  <div class="time">{{ timeLeft }}s</div>
 </div>
