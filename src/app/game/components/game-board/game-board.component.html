@@ -3,20 +3,24 @@
     class="column"
     *ngFor="let column of board[0]; let colIndex = index"
     (click)="handleColumnClick(colIndex)">
-    <div class="cell" 
-    *ngFor="let rowIndex of rowIndices"
-    [ngClass]="{
-    'win-cell': isWinningCell(rowIndex, colIndex)}"
+    
+    <div
+      class="cell"
+      *ngFor="let rowIndex of rowIndices"
+      [ngClass]="{
+        'win-cell': isWinningCell(rowIndex, colIndex),
+        'player1': board[rowIndex][colIndex] === 1,
+        'player2': board[rowIndex][colIndex] === 2,
+        'fall': board[rowIndex][colIndex] !== null
+      }"
     >
-
-        <app-disc [player]="board[rowIndex][colIndex]"></app-disc>
+      <app-disc [player]="board[rowIndex][colIndex]"></app-disc>
     </div>
+
   </div>
 </div>
 
-
+<!-- Messaggio vincita -->
 <div class="winner-message" *ngIf="gameService.winner">
   🎉 Giocatore {{ gameService.winner }} ha vinto!
 </div>
-
-<!-- <button (click)="resetGame()">Restart</button> -->

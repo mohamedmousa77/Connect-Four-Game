@@ -63,11 +63,13 @@ export class GameService {
 
   dropDisc(colIndex: number): boolean {
     if (this.gameOver) return false;
+    this.playSound('assets/sounds/click.mp3');
     for (let row = this.ROWS - 1; row >= 0; row--) {
       if (this.board[row][colIndex] === null) {
         this.board[row][colIndex] = this.currentPlayer;
          //? Verifica la vittoria subito dopo aver inserito il disco
         if (this.checkWin(row, colIndex)) {
+          this.playSound('assets/sounds/win.mp3');
           this.winner = this.currentPlayer;
           this.gameOver = true;
             if (this.currentPlayer) {
@@ -234,4 +236,12 @@ export class GameService {
     }
   }
 
+  // Play Sounds
+  playSound(src: string) {
+    const audio = new Audio();
+    audio.src = src;
+    audio.load();
+    audio.play();
   }
+  }
+
