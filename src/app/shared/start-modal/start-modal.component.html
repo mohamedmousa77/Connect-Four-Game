@@ -1,0 +1,32 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+        <h2>Choose the Game Modality</h2>
+
+        <!-- Modalità -->
+        <div class="mode-buttons">
+            <button [class.active]="mode === '2p'" (click)="selectMode('2p')">
+                🧍‍♂️ Two Players
+            </button>
+            <button [class.active]="mode === 'cpu'" (click)="selectMode('cpu')">
+                🤖 Vs Computer
+            </button>
+        </div>
+
+        <!-- Se 2 giocatori -->
+        <div *ngIf="mode === '2p'" class="name-inputs">
+            <input [(ngModel)]="name1" placeholder="first Player Name" />
+            <input [(ngModel)]="name2" placeholder="Second Player Name" />
+        </div>
+
+        <!-- Se vs CPU -->
+        <div *ngIf="mode === 'cpu'" class="cpu-options">
+            <label>Difficulty:</label>
+            <select [(ngModel)]="difficulty">
+                <option value="easy">Easy</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+
+        <button class="start-btn" (click)="startGame()">🎮 Start</button>
+    </div>
+</div>

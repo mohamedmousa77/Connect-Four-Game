@@ -107,3 +107,17 @@
   transform: scale(1.05);
   box-shadow: 0 0 15px #ffc107;
 }
+
+// Feedback while processing the logic Style
+.thinking-msg {
+  margin-top: 1rem;
+  font-style: italic;
+  font-size: 1rem;
+  color: white;
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}

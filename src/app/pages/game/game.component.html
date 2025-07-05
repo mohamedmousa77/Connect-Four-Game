@@ -6,7 +6,11 @@
     <button class="restart-btn" (click)="resetGame()">RESTART</button>
   </div>
   <app-rules-modal *ngIf="showRules" (close)="toggleRules()"></app-rules-modal>
-
+    
+  <!-- Feedback while processing the logic -->
+  <div *ngIf="gameService.isVsCPU && gameService.currentPlayer === 2 && !gameService.gameOver" class="thinking-msg">
+    🤖 The Computer is thinking...
+  </div>
   <!-- Main -->
   <div class="main">
     
@@ -15,7 +19,7 @@
     [ngClass]="{ 'active-player': gameService.currentPlayer === 1 }"
     class="player-panel">
       <div class="player-icon">😊</div>
-      <div class="label">PLAYER 1</div>
+      <div class="label">{{ gameService.playerNames[1] }}</div>
       <div class="score">{{ gameService.score[1] }}</div>
     </div>
 
@@ -27,7 +31,7 @@
     [ngClass]="{ 'active-player': gameService.currentPlayer === 2 }"
     class="player-panel">
       <div class="player-icon">😎</div>
-      <div class="label">PLAYER 2</div>
+      <div class="label">{{ gameService.playerNames[2] }}</div>
       <div class="score">{{ gameService.score[2] }}</div>
     </div>
   </div>
@@ -38,7 +42,12 @@
   </div>
   <app-turn-timer></app-turn-timer>
 </div>
- <app-victory-modal
+
+<!-- Victory Modal to Celebrate -->
+<app-victory-modal
   [winner]="gameService.winner"
   (playAgain)="resetGame()">
 </app-victory-modal>
+
+<!-- Starter Modal to choose AI or two players -->
+<app-start-modal *ngIf="showStartModal" (start)="onGameStart($event)"></app-start-modal>

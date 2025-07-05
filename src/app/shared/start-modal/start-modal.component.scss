@@ -1,0 +1,63 @@
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5); // sfondo semi-trasparente
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 5px 5px 0 #000;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    button {
+        flex: 1;
+        padding: 1rem;
+        font-weight: bold;
+        border-radius: 12px;
+        background: #7b5be7;
+        color: white;
+        border: none;
+        box-shadow: 0 5px 0 #3b2e93;
+        cursor: pointer;
+
+        &.active {
+        background-color: #543fd7;
+        }
+    }
+}
+
+.name-inputs input,
+.cpu-options select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    font-size: 1rem;
+}
+
+.start-btn {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    background: #ff5678;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}

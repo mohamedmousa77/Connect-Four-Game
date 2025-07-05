@@ -10,9 +10,14 @@ export class GameService {
   readonly ROWS = 6;
   readonly COLS = 7;
 
-  score = {
+  score: { [key: number]: number } = {
     1: 0,
     2: 0
+  };
+
+  playerNames: { [key: number]: string } = {
+    1: 'Player 1',
+    2: 'Player 2'
   };
 
   board: Cell[][] = [];
@@ -21,11 +26,15 @@ export class GameService {
   gameOver = false;
   boardReset$ = new Subject<void>();
   turnChange$ = new Subject<void>();
+
+  isVsCPU = true;
+  aiDifficulty: 'easy' | 'hard' = 'easy'; // default
   
   winningCells: { row: number; col: number }[] = [];
 
   constructor() {
     this.initBoard();
+    this.loadFromStorage();
   }
   
   initBoard() {
@@ -36,8 +45,6 @@ export class GameService {
     this.winner = null;
     this.gameOver = false;
     this.boardReset$.next();
-    
-    this.boardReset$.next(); // notifica reset
     this.turnChange$.next(); // resetta anche il timer
 
     this.winningCells = [];
@@ -56,7 +63,6 @@ export class GameService {
 
   dropDisc(colIndex: number): boolean {
     if (this.gameOver) return false;
-
     for (let row = this.ROWS - 1; row >= 0; row--) {
       if (this.board[row][colIndex] === null) {
         this.board[row][colIndex] = this.currentPlayer;
@@ -66,9 +72,12 @@ export class GameService {
           this.gameOver = true;
             if (this.currentPlayer) {
               this.score[this.currentPlayer]++;
+              this.saveToStorage(); 
             }
         } else {
           this.switchPlayer();
+          // Chiamata alla CPU se è il suo turno
+          this.playCPUMove();
         }
         return true;
       }
@@ -76,16 +85,14 @@ export class GameService {
     return false; // colonna piena
   }
 
-  private checkWin(row: number, col: number): boolean {
-  const player = this.currentPlayer;
-
+  checkWin(row: number, col: number, player: Player = this.currentPlayer): boolean {
   // Direzioni: orizzontale, verticale, diagonale ↘, diagonale ↙
   const directions = [
     { dr: 0, dc: 1 },   // Orizzontale →
     { dr: 1, dc: 0 },   // Verticale ↓
     { dr: 1, dc: 1 },   // Diagonale ↘
     { dr: 1, dc: -1 },  // Diagonale ↙
-  ];
+    ];
 
   for (let { dr, dc } of directions) {
     let count = 1;
@@ -95,7 +102,7 @@ export class GameService {
     // Check indietro
     count += this.countDirection(row, col, -dr, -dc, player);
 
-    if (count >= 6) return true;
+    if (count >= 4) return true;
 
     const line = [{ row, col }];
 
@@ -106,9 +113,7 @@ export class GameService {
       this.winningCells = line.slice(0, 4); // salva le prime 4
       return true;
     }
-
-  }
-
+    }
   return false;
   }
 
@@ -125,11 +130,9 @@ export class GameService {
     connected.push({ row: r, col: c });
     r += dr;
     c += dc;
-  }
-
+    }
   return connected;
-}
-
+  }
 
   private countDirection(
     row: number,
@@ -156,4 +159,79 @@ export class GameService {
 
     return count;
   }
-}
+
+  playCPUMove() {
+    if (!this.isVsCPU || this.gameOver || this.currentPlayer !== 2) return;
+    setTimeout(() => {
+      // 1. cerca vittoria
+      const winCol = this.findStrategicMove(2);
+      if (winCol !== null) {
+      this.dropDisc(winCol);
+      return;
+      }
+      // 2. blocca giocatore
+      const blockCol = this.findStrategicMove(1);
+      
+      if (blockCol !== null) {
+      this.dropDisc(blockCol);
+      return;
+      }
+      // 3. altrimenti random
+      const availableCols = this.getAvailableColumns();
+      const randomCol = availableCols[Math.floor(Math.random() * availableCols.length)];
+      this.dropDisc(randomCol);
+    }, 700);
+  }
+
+  findStrategicMove(player: Player): number | null {
+  const availableCols = this.getAvailableColumns();
+
+  for (const col of availableCols) {
+    const row = this.findAvailableRow(col);
+    if (row === -1) continue;
+
+    this.board[row][col] = player;
+    const isWin = this.checkWin(row, col, player);
+    this.board[row][col] = null;
+
+    if (isWin) return col;
+  }
+
+  return null;
+  }
+
+  findAvailableRow(col: number): number {
+    for (let row = this.ROWS - 1; row >= 0; row--) {
+      if (this.board[row][col] === null) return row;
+    }
+    return -1;
+  }
+
+  getAvailableColumns(): number[] {
+    const available: number[] = [];
+    for (let c = 0; c < this.COLS; c++) {
+      if (this.board[0][c] === null) {
+        available.push(c);
+      }
+    }
+    return available;
+    }
+
+  // To save in storage
+  saveToStorage() {
+    localStorage.setItem('connect4_score', JSON.stringify(this.score));
+    localStorage.setItem('connect4_names', JSON.stringify(this.playerNames));
+  }
+
+  loadFromStorage() {
+    const savedScore = localStorage.getItem('connect4_score');
+    const savedNames = localStorage.getItem('connect4_names');
+    if (savedScore) {
+      this.score = JSON.parse(savedScore);
+    }
+    if (savedNames) {
+      this.playerNames = JSON.parse(savedNames);
+    }
+  }
+
+  }
