@@ -14,8 +14,10 @@
   <div class="main">
 
     <!-- Player 1 -->
-    <div class="player-wrapper">
-      <app-turn-timer *ngIf="gameService.showTimerFirstPlayer"></app-turn-timer>      
+    <div class="d-flex timer-wrapper ">
+      <app-turn-timer *ngIf="gameService.showTimerFirstPlayer  && !showStartModal" [player]="1"
+      [isActive]="!showStartModal"
+      ></app-turn-timer>      
       <div 
       [ngClass]="{ 'active-player': gameService.currentPlayer === 1 }"
       class="player-panel">
@@ -29,8 +31,11 @@
     <app-game-board></app-game-board>
 
     <!-- Player 2 -->
-    <div class="player-wrapper">
-      <app-turn-timer *ngIf="gameService.showTimerSecondPlayer"></app-turn-timer>
+    <div class="d-flex timer-wrapper">
+      <app-turn-timer *ngIf="gameService.showTimerSecondPlayer  && !showStartModal"
+      [isActive]="!showStartModal"
+      [player]="2"
+      ></app-turn-timer>
       <div 
       [ngClass]="{ 'active-player': gameService.currentPlayer === 2 }"
       class="player-panel">

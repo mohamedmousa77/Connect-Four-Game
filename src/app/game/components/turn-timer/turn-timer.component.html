@@ -13,7 +13,8 @@
       cx="50"
       cy="50"
       [attr.stroke-dashoffset]="dashOffset"
-      stroke="#ff5678"
+      
+      [attr.stroke]="player === 1 ? '#ff5678' : '#ffc72c'"
       stroke-width="10"
       fill="none"
       stroke-dasharray="282.6"
@@ -23,12 +24,4 @@
   </svg>
   <div class="time">{{ timeLeft }}s</div>
 </div>
-
-<!-- <div class="turn-box" *ngIf="!gameService.gameOver">
-  <div class="label">
-    ⏱️ Player {{ gameService.currentPlayer }}'s turn
-  </div>
-  <div class="timer-circle">
-    {{ timeLeft }}s
-  </div>
-</div> -->
+<!-- stroke="#ff5678" -->

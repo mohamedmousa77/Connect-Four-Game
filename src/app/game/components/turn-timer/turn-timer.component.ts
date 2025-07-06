@@ -11,6 +11,9 @@ import { GameService } from '../../services/game.service';
   styleUrl: './turn-timer.component.scss'
 })
 export class TurnTimerComponent implements OnInit, OnDestroy {
+  @Input() player: number = 1; 
+  @Input() isActive: boolean = false;
+  private timerInterval: any;
   timeLeft = 30;
   showTimeoutMessage = false;
 
@@ -19,11 +22,12 @@ export class TurnTimerComponent implements OnInit, OnDestroy {
   private resetSub: Subscription | undefined;
 
   constructor(public gameService: GameService) {}
-  @Input() player: number = 1; 
-
+  
   ngOnInit(): void {
     // Avvia il timer all'inizio
+    if (this.isActive) {
     this.startTimer();
+    }
 
     // Quando il turno cambia → reset timer
     this.turnSub = this.gameService.turnChange$.subscribe(() => {
@@ -58,7 +62,6 @@ export class TurnTimerComponent implements OnInit, OnDestroy {
           }, 2000);
 
         this.stopTimer();
-        // this.gameService.switchPlayer(); // forza passaggio turno
       }
     });
   }

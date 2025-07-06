@@ -75,10 +75,11 @@
   }
 }
 
-.player-wrapper {
+.timer-wrapper {
   display: flex;
-  gap: 16px; 
+  flex-direction: column;   // 👈 forza disposizione verticale
   align-items: center;
+  gap: 35px; 
 }
 
 // Turn box (in basso)
