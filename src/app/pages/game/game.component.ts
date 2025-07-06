@@ -30,6 +30,7 @@ export class GameComponent {
   showRules = false;
   showStartModal = true;
 
+
   constructor(public gameService: GameService, public storageSer: StorageService) {  }
 
   resetGame() {
@@ -40,14 +41,14 @@ export class GameComponent {
     this.showRules = !this.showRules;
   }
 
-  
-
-  onGameStart(config: {
+  onGameStart(
+    config: {
     mode: '2p' | 'cpu',
     name1: string,
     name2: string,
     difficulty: 'easy' | 'hard'
-  }) {
+    }) 
+    {
     this.showStartModal = false;
 
     this.storageSer.playerNames[1] = config.name1;

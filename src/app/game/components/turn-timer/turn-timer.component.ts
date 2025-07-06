@@ -19,6 +19,7 @@ export class TurnTimerComponent implements OnInit, OnDestroy {
   private resetSub: Subscription | undefined;
 
   constructor(public gameService: GameService) {}
+  @Input() player: number = 1; 
 
   ngOnInit(): void {
     // Avvia il timer all'inizio

@@ -12,28 +12,51 @@ export class AiServices {
 
   constructor() { }
 
-  playCPUMove(board: Player[][], currentPlayer: Player, isVsCPU: boolean, isGameOver: boolean, dropDisc: (col: number) => void) {
+  playCPUMove(
+    board: Player[][],
+    currentPlayer: Player,
+    isVsCPU: boolean,
+    isGameOver: boolean,
+    dropDiscFn: (col: number) => void
+  ) {
     if (!isVsCPU || isGameOver || currentPlayer !== 2) return;
+
     setTimeout(() => {
-      // 1. cerca vittoria
       const winCol = this.findStrategicMove(2, board);
-      if (winCol !== null) {
-        dropDisc(winCol);
-      return;
-      }
-      // 2. blocca giocatore
-      const blockCol = this.findStrategicMove(1,board);
-      
-      if (blockCol !== null) {
-      dropDisc(blockCol);
-      return;
-      }
-      // 3. altrimenti random
+      if (winCol !== null) return dropDiscFn(winCol);
+
+      const blockCol = this.findStrategicMove(1, board);
+      if (blockCol !== null) return dropDiscFn(blockCol);
+
       const availableCols = this.getAvailableColumns(board);
       const randomCol = availableCols[Math.floor(Math.random() * availableCols.length)];
-      dropDisc(randomCol);
+      dropDiscFn(randomCol);
     }, 400);
   }
+
+  // playCPUMove(board: Player[][], currentPlayer: Player, isVsCPU: boolean, isGameOver: boolean, dropDisc: (col: number) => void) {
+  //   console.log(`Play computer called. is game over: ${isGameOver}`)
+  //   if (!isVsCPU || isGameOver || currentPlayer !== 2) return;
+  //   setTimeout(() => {
+  //     // 1. cerca vittoria
+  //     const winCol = this.findStrategicMove(2, board);
+  //     if (winCol !== null) {
+  //       dropDisc(winCol);
+  //     return;
+  //     }
+  //     // 2. blocca giocatore
+  //     const blockCol = this.findStrategicMove(1,board);
+      
+  //     if (blockCol !== null) {
+  //     dropDisc(blockCol);
+  //     return;
+  //     }
+  //     // 3. altrimenti random
+  //     const availableCols = this.getAvailableColumns(board);
+  //     const randomCol = availableCols[Math.floor(Math.random() * availableCols.length)];
+  //     dropDisc(randomCol);
+  //   }, 400);
+  // }
 
   findStrategicMove(player: Player, board: Player[][] ): number | null {
   const availableCols = this.getAvailableColumns(board);

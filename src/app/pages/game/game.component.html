@@ -3,44 +3,44 @@
   <!-- Header -->
   <div class="header">
     <button class="menu-btn"  (click)="toggleRules()">MENU</button>
+    <!-- Feedback while processing the logic -->
+    <div *ngIf="gameService.isVsCPU && gameService.currentPlayer === 2 && !gameService.gameOver" class="thinking-msg">
+      🤖 The Computer is thinking...
+    </div>
     <button class="restart-btn" (click)="resetGame()">RESTART</button>
   </div>
-  <app-rules-modal *ngIf="showRules" (close)="toggleRules()"></app-rules-modal>
     
-  <!-- Feedback while processing the logic -->
-  <div *ngIf="gameService.isVsCPU && gameService.currentPlayer === 2 && !gameService.gameOver" class="thinking-msg">
-    🤖 The Computer is thinking...
-  </div>
   <!-- Main -->
   <div class="main">
-    
+
     <!-- Player 1 -->
-    <div 
-    [ngClass]="{ 'active-player': gameService.currentPlayer === 1 }"
-    class="player-panel">
-      <div class="player-icon">😊</div>
-      <div class="label">{{ storageSer.playerNames[1] }}</div>
-      <div class="score">{{ gameService.score[1] }}</div>
+    <div class="player-wrapper">
+      <app-turn-timer *ngIf="gameService.showTimerFirstPlayer"></app-turn-timer>      
+      <div 
+      [ngClass]="{ 'active-player': gameService.currentPlayer === 1 }"
+      class="player-panel">
+        <div class="player-icon">😊</div>
+        <div class="label">{{ storageSer.playerNames[1] }}</div>
+        <div class="score">{{ gameService.score[1] }}</div>
+      </div>
     </div>
 
     <!-- Board -->
     <app-game-board></app-game-board>
 
     <!-- Player 2 -->
-    <div 
-    [ngClass]="{ 'active-player': gameService.currentPlayer === 2 }"
-    class="player-panel">
-      <div class="player-icon">😎</div>
-      <div class="label">{{ storageSer.playerNames[2] }}</div>
-      <div class="score">{{ gameService.score[2] }}</div>
+    <div class="player-wrapper">
+      <app-turn-timer *ngIf="gameService.showTimerSecondPlayer"></app-turn-timer>
+      <div 
+      [ngClass]="{ 'active-player': gameService.currentPlayer === 2 }"
+      class="player-panel">
+        <div class="player-icon">😎</div>
+        <div class="label">{{ storageSer.playerNames[2] }}</div>
+        <div class="score">{{ gameService.score[2] }}</div>
+      </div>
     </div>
-  </div>
 
-  <!-- Turn display -->
-  <div class="turn-box">
-    🎯 Player {{ gameService.currentPlayer }}'s turn
   </div>
-  <app-turn-timer></app-turn-timer>
 </div>
 
 <!-- Victory Modal to Celebrate -->
@@ -51,3 +51,6 @@
 
 <!-- Starter Modal to choose AI or two players -->
 <app-start-modal *ngIf="showStartModal" (start)="onGameStart($event)"></app-start-modal>
+
+<!-- Show the rules -->
+<app-rules-modal *ngIf="showRules" (close)="toggleRules()"></app-rules-modal>

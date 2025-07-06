@@ -18,7 +18,8 @@ export class GameService {
     2: 0
   };
 
-
+  showTimerFirstPlayer  = true;
+  showTimerSecondPlayer = false;
 
   board: Cell[][] = [];
   currentPlayer: Player = 1;
@@ -32,9 +33,12 @@ export class GameService {
   
   winningCells: { row: number; col: number }[] = [];
 
+  boundDropDisc = (col: number) => this.dropDisc(col);
+
   constructor(public aiService: AiServices, public storageService: StorageService) {
     this.initBoard();
     this.storageService.loadFromStorage(this.score);
+    
   }
   
   initBoard() {
@@ -57,6 +61,13 @@ export class GameService {
   switchPlayer() {
     this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
     this.turnChange$.next(); 
+    if(this.currentPlayer === 1){
+      this.showTimerFirstPlayer =true;
+      this.showTimerSecondPlayer =false
+    }else {
+      this.showTimerSecondPlayer =true;
+      this.showTimerFirstPlayer =false;
+    }
   }
 
   dropDisc(colIndex: number): boolean {
@@ -77,7 +88,7 @@ export class GameService {
         } else {
           this.switchPlayer();
           // Chiamata alla CPU se è il suo turno
-          this.aiService.playCPUMove(this.board, this.currentPlayer,this.isVsCPU,this.gameOver,this.dropDisc);
+          this.aiService.playCPUMove(this.board, this.currentPlayer,this.isVsCPU,this.gameOver,this.boundDropDisc);
         }
         return true;
       }
