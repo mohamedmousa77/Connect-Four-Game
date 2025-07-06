@@ -45,7 +45,7 @@ export class TurnTimerComponent implements OnInit, OnDestroy {
         this.stopTimer();
         return;
       }
-      const tick = new Audio('assets/sounds/tick-timer.mp3');
+      const tick = new Audio('tick-timer.mp3');
       tick.play();
       this.timeLeft--;
 

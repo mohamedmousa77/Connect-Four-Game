@@ -19,7 +19,7 @@
     [ngClass]="{ 'active-player': gameService.currentPlayer === 1 }"
     class="player-panel">
       <div class="player-icon">😊</div>
-      <div class="label">{{ gameService.playerNames[1] }}</div>
+      <div class="label">{{ storageSer.playerNames[1] }}</div>
       <div class="score">{{ gameService.score[1] }}</div>
     </div>
 
@@ -31,7 +31,7 @@
     [ngClass]="{ 'active-player': gameService.currentPlayer === 2 }"
     class="player-panel">
       <div class="player-icon">😎</div>
-      <div class="label">{{ gameService.playerNames[2] }}</div>
+      <div class="label">{{ storageSer.playerNames[2] }}</div>
       <div class="score">{{ gameService.score[2] }}</div>
     </div>
   </div>

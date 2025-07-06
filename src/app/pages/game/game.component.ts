@@ -9,17 +9,19 @@ import { VictoryModalComponent } from '../../shared/victory-modal/victory-modal.
 import { StartModalComponent } from '../../shared/start-modal/start-modal.component';
 
 import { GameService } from '../../game/services/game.service';
+import { StorageService } from '../../game/services/storage/storage.service';
 
 @Component({
   selector: 'app-game',
   imports: [
     CommonModule,
     FormsModule,
+    StartModalComponent,
     GameBoardComponent, 
     TurnTimerComponent,
     RulesModalComponent, 
     VictoryModalComponent,
-    StartModalComponent,
+    
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
@@ -28,7 +30,7 @@ export class GameComponent {
   showRules = false;
   showStartModal = true;
 
-  constructor(public gameService: GameService) {  }
+  constructor(public gameService: GameService, public storageSer: StorageService) {  }
 
   resetGame() {
     this.gameService.initBoard();
@@ -48,10 +50,10 @@ export class GameComponent {
   }) {
     this.showStartModal = false;
 
-    this.gameService.playerNames[1] = config.name1;
-    this.gameService.playerNames[2] = config.name2;
+    this.storageSer.playerNames[1] = config.name1;
+    this.storageSer.playerNames[2] = config.name2;
     this.gameService.isVsCPU = config.mode === 'cpu';
-    this.gameService.saveToStorage();
+    this.storageSer.saveToStorage(this.gameService.score);
 
     // (opzionale) salva difficoltà se implementata
     this.gameService.aiDifficulty = config.difficulty;

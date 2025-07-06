@@ -6,18 +6,20 @@
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateY(-30px); // iniziale fuori
-  transition: transform 0.3s ease-out, background-color 0.2s ease-in;
+
+  &.fall {
+    animation: fall 0.35s ease-out forwards;
+  }
 
   &.player-1 {
     background-color: #ff5678;
-    transform: translateY(0); // effetto discesa
   }
 
   &.player-2 {
     background-color: #ffc72c;
-    transform: translateY(0);
   }
+}
+
 :host {
   display: block;
   width: 100%;
@@ -25,6 +27,13 @@
   border-radius: 50%;
   background-color: transparent;
   box-shadow: inset -6px -6px 0 #000;
-  }
 }
 
+@keyframes fall {
+  0% {
+    transform: translateY(-150%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

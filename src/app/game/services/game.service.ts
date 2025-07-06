@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject, subscribeOn } from 'rxjs';
+import { Player } from '../../../Models/player-model';
+import { AiServices } from './ai-logic/ai-logic.service';
+import { StorageService } from './storage/storage.service';
 
-export type Player = 1 | 2 | null;
+
 export type Cell = Player;
 
 @Injectable({ providedIn: 'root' })
@@ -15,10 +18,7 @@ export class GameService {
     2: 0
   };
 
-  playerNames: { [key: number]: string } = {
-    1: 'Player 1',
-    2: 'Player 2'
-  };
+
 
   board: Cell[][] = [];
   currentPlayer: Player = 1;
@@ -32,9 +32,9 @@ export class GameService {
   
   winningCells: { row: number; col: number }[] = [];
 
-  constructor() {
+  constructor(public aiService: AiServices, public storageService: StorageService) {
     this.initBoard();
-    this.loadFromStorage();
+    this.storageService.loadFromStorage(this.score);
   }
   
   initBoard() {
@@ -55,31 +55,29 @@ export class GameService {
   }
 
   switchPlayer() {
-    // console.log('switch player called!');
     this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-    // console.log('current player is:' + this.currentPlayer);
     this.turnChange$.next(); 
   }
 
   dropDisc(colIndex: number): boolean {
     if (this.gameOver) return false;
-    this.playSound('assets/sounds/click.mp3');
+    this.playSound('click.mp3');
     for (let row = this.ROWS - 1; row >= 0; row--) {
       if (this.board[row][colIndex] === null) {
         this.board[row][colIndex] = this.currentPlayer;
          //? Verifica la vittoria subito dopo aver inserito il disco
         if (this.checkWin(row, colIndex)) {
-          this.playSound('assets/sounds/win.mp3');
+          this.playSound('win.mp3');
           this.winner = this.currentPlayer;
           this.gameOver = true;
             if (this.currentPlayer) {
               this.score[this.currentPlayer]++;
-              this.saveToStorage(); 
+              this.storageService.saveToStorage(this.score); 
             }
         } else {
           this.switchPlayer();
           // Chiamata alla CPU se è il suo turno
-          this.playCPUMove();
+          this.aiService.playCPUMove(this.board, this.currentPlayer,this.isVsCPU,this.gameOver,this.dropDisc);
         }
         return true;
       }
@@ -162,86 +160,11 @@ export class GameService {
     return count;
   }
 
-  playCPUMove() {
-    if (!this.isVsCPU || this.gameOver || this.currentPlayer !== 2) return;
-    setTimeout(() => {
-      // 1. cerca vittoria
-      const winCol = this.findStrategicMove(2);
-      if (winCol !== null) {
-      this.dropDisc(winCol);
-      return;
-      }
-      // 2. blocca giocatore
-      const blockCol = this.findStrategicMove(1);
-      
-      if (blockCol !== null) {
-      this.dropDisc(blockCol);
-      return;
-      }
-      // 3. altrimenti random
-      const availableCols = this.getAvailableColumns();
-      const randomCol = availableCols[Math.floor(Math.random() * availableCols.length)];
-      this.dropDisc(randomCol);
-    }, 700);
-  }
+  playSound(path: string) {
+  const audio = new Audio(path);
+  audio.volume = 0.4;
+  audio.play().catch(err => console.warn('Audio blocked:', err));
+}
 
-  findStrategicMove(player: Player): number | null {
-  const availableCols = this.getAvailableColumns();
-
-  for (const col of availableCols) {
-    const row = this.findAvailableRow(col);
-    if (row === -1) continue;
-
-    this.board[row][col] = player;
-    const isWin = this.checkWin(row, col, player);
-    this.board[row][col] = null;
-
-    if (isWin) return col;
-  }
-
-  return null;
-  }
-
-  findAvailableRow(col: number): number {
-    for (let row = this.ROWS - 1; row >= 0; row--) {
-      if (this.board[row][col] === null) return row;
-    }
-    return -1;
-  }
-
-  getAvailableColumns(): number[] {
-    const available: number[] = [];
-    for (let c = 0; c < this.COLS; c++) {
-      if (this.board[0][c] === null) {
-        available.push(c);
-      }
-    }
-    return available;
-    }
-
-  // To save in storage
-  saveToStorage() {
-    localStorage.setItem('connect4_score', JSON.stringify(this.score));
-    localStorage.setItem('connect4_names', JSON.stringify(this.playerNames));
-  }
-
-  loadFromStorage() {
-    const savedScore = localStorage.getItem('connect4_score');
-    const savedNames = localStorage.getItem('connect4_names');
-    if (savedScore) {
-      this.score = JSON.parse(savedScore);
-    }
-    if (savedNames) {
-      this.playerNames = JSON.parse(savedNames);
-    }
-  }
-
-  // Play Sounds
-  playSound(src: string) {
-    const audio = new Audio();
-    audio.src = src;
-    audio.load();
-    audio.play();
-  }
   }
 
