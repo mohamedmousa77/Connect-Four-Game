@@ -1,11 +1,30 @@
 <div class="modal-backdrop">
-  <div class="modal-content">
-    <h2>🎮 Regole del gioco</h2>
-    <ul>
-      <li>Ogni giocatore gioca a turno</li>
-      <li>Il primo che allinea 4 pedine vince</li>
-      <li>Hai 30s per ogni turno</li>
+  <div class="modal-content animated fadeInDown">
+    <button class="close-btn" (click)="onClose()">×</button>
+    <h2 class="modal-title">📄 Game Rules</h2>
+
+    <ul class="rules-list">
+      <li>🎯 Drop discs into a column</li>
+      <li>🪙 Discs fall to the lowest available space</li>
+      <li>🏆 Connect 4 in a row (horizontally, vertically, or diagonally)</li>
+      <li>🤖 Play against another player or the AI</li>
     </ul>
-    <button (click)="closeModal()">Chiudi</button>
+
+    <div class="settings">
+      <div class="setting-row">
+        <span>🔈 Sound:</span>
+        <span [ngClass]="{ 'active': gameService.soundEnabled }">
+          {{ gameService.soundEnabled ? 'On' : 'Off' }}
+        </span>
+        <button class="toggle-btn" (click)="toggleSound()">{{ soundLabel }}</button>
+      </div>
+
+      <div class="setting-row">
+        <span>🧠 AI Difficulty:</span>
+        <span class="difficulty">{{ aiDifficulty }}</span>
+      </div>
+    </div>
+
+    <button class="confirm-btn" (click)="onClose()">Got it!</button>
   </div>
 </div>

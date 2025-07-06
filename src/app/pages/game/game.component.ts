@@ -29,6 +29,8 @@ import { StorageService } from '../../game/services/storage/storage.service';
 export class GameComponent {
   showRules = false;
   showStartModal = true;
+  soundEnabled = true;
+
 
 
   constructor(public gameService: GameService, public storageSer: StorageService) {  }
@@ -40,6 +42,7 @@ export class GameComponent {
   toggleRules() {
     this.showRules = !this.showRules;
   }
+
 
   onGameStart(
     config: {

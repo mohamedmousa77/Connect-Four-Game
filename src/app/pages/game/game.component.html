@@ -4,7 +4,7 @@
   <div class="header">
     <button class="menu-btn"  (click)="toggleRules()">MENU</button>
     <!-- Feedback while processing the logic -->
-    <div *ngIf="gameService.isVsCPU && gameService.currentPlayer === 2 && !gameService.gameOver" class="thinking-msg">
+    <div *ngIf="gameService.isVsCPU && gameService.currentPlayer === 2 && !gameService.gameOver && gameService.aiDifficulty == 'hard'" class="thinking-msg">
       🤖 The Computer is thinking...
     </div>
     <button class="restart-btn" (click)="resetGame()">RESTART</button>
@@ -57,5 +57,7 @@
 <!-- Starter Modal to choose AI or two players -->
 <app-start-modal *ngIf="showStartModal" (start)="onGameStart($event)"></app-start-modal>
 
-<!-- Show the rules -->
-<app-rules-modal *ngIf="showRules" (close)="toggleRules()"></app-rules-modal>
+<button class="menu-btn" (click)="toggleRules()">📄 Regole</button>
+<app-rules-modal 
+  *ngIf="showRules" (close)="toggleRules()"
+></app-rules-modal>

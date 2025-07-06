@@ -13,6 +13,8 @@ export class GameService {
   readonly ROWS = 6;
   readonly COLS = 7;
 
+  soundEnabled = true;
+
   score: { [key: number]: number } = {
     1: 0,
     2: 0
@@ -88,7 +90,14 @@ export class GameService {
         } else {
           this.switchPlayer();
           // Chiamata alla CPU se è il suo turno
-          this.aiService.playCPUMove(this.board, this.currentPlayer,this.isVsCPU,this.gameOver,this.boundDropDisc);
+          this.aiService.playCPUMove(            
+            this.board, 
+            this.currentPlayer,
+            this.isVsCPU, 
+            this.aiDifficulty, 
+            this.gameOver,
+            this.boundDropDisc,
+          );
         }
         return true;
       }
@@ -172,10 +181,11 @@ export class GameService {
   }
 
   playSound(path: string) {
+  if (!this.soundEnabled) return; 
   const audio = new Audio(path);
   audio.volume = 0.4;
   audio.play().catch(err => console.warn('Audio blocked:', err));
-}
-
   }
+
+}
 
