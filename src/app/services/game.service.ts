@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject, subscribeOn } from 'rxjs';
-import { Player } from '../../../Models/player-model';
+import { Player } from '../../Models/player-model';
 import { AiServices } from './ai-logic/ai-logic.service';
 import { StorageService } from './storage/storage.service';
 
