@@ -31,7 +31,7 @@ export class GameService {
   turnChange$ = new Subject<void>();
 
   isVsCPU = true;
-  aiDifficulty: 'easy' | 'hard' = 'easy'; // default
+  aiDifficulty: 'easy' | 'hard' = 'easy';
   
   winningCells: { row: number; col: number }[] = [];
 
@@ -47,13 +47,32 @@ export class GameService {
     this.board = Array(this.ROWS)
       .fill(null)
       .map(() => Array(this.COLS).fill(null));
+    //! Reseting all values to origin
+    this.score = { 1: 0, 2: 0 };
     this.currentPlayer = 1;
     this.winner = null;
     this.gameOver = false;
     this.boardReset$.next();
-    this.turnChange$.next(); // resetta anche il timer
+    this.turnChange$.next();
+    this.showTimerFirstPlayer = true;
+    this.showTimerSecondPlayer = false;
 
     this.winningCells = [];
+
+    if (this.isVsCPU && this.currentPlayer === 2 as Player) {
+    this.showTimerFirstPlayer = false;
+    this.showTimerSecondPlayer = true;
+    setTimeout(() => {
+      this.aiService.playCPUMove(            
+            this.board, 
+            this.currentPlayer,
+            this.isVsCPU, 
+            this.aiDifficulty, 
+            this.gameOver,
+            this.boundDropDisc,
+        );
+    }, 400);
+    }
   }
 
   getBoard(): Cell[][] {
@@ -61,7 +80,9 @@ export class GameService {
   }
 
   switchPlayer() {
+    
     this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
+    console.log(`the current player is ${this.currentPlayer}`);
     this.turnChange$.next(); 
     if(this.currentPlayer === 1){
       this.showTimerFirstPlayer =true;
@@ -89,7 +110,7 @@ export class GameService {
             }
         } else {
           this.switchPlayer();
-          // Chiamata alla CPU se è il suo turno
+          // Chiamata alla CPU se è il suo turno          
           this.aiService.playCPUMove(            
             this.board, 
             this.currentPlayer,

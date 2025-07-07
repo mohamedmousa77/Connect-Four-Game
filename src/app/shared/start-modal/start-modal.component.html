@@ -1,32 +1,35 @@
 <div class="modal-overlay">
     <div class="modal-content">
-        <h2>Choose the Game Modality</h2>
+        <h2>Welcome to Connect 4 Game</h2>
 
-        <!-- Modalità -->
-        <div class="mode-buttons">
-            <button [class.active]="mode === '2p'" (click)="selectMode('2p')">
+        <div class="form-group mode-buttons">
+            <button [class.active]="isVsCPU === false" [class.selected]="isVsCPU === false" (click)="onSelectMode('two') ">
                 🧍‍♂️ Two Players
             </button>
-            <button [class.active]="mode === 'cpu'" (click)="selectMode('cpu')">
+            <button [class.active]="isVsCPU === true" [class.selected]="isVsCPU === true" (click)="onSelectMode('cpu')">
                 🤖 Vs Computer
             </button>
         </div>
 
         <!-- Se 2 giocatori -->
-        <div *ngIf="mode === '2p'" class="name-inputs">
-            <input [(ngModel)]="name1" placeholder="first Player Name" />
-            <input [(ngModel)]="name2" placeholder="Second Player Name" />
+        <div class="form-group name-inputs">
+            <input [(ngModel)]="names[1]"  placeholder="first Player Name" />
+            <ng-container *ngIf="isVsCPU === false">
+                <input type="text" placeholder="Second Player Name" [(ngModel)]="names[2]" />
+            </ng-container>
+            <!-- <input [(ngModel)]="name2" placeholder="Second Player Name" /> -->
         </div>
 
         <!-- Se vs CPU -->
-        <div *ngIf="mode === 'cpu'" class="cpu-options">
+        <div *ngIf="isVsCPU === true" class="form-group cpu-options">
             <label>Difficulty:</label>
             <select [(ngModel)]="difficulty">
                 <option value="easy">Easy</option>
                 <option value="hard">Hard</option>
             </select>
         </div>
-
-        <button class="start-btn" (click)="startGame()">🎮 Start</button>
+        <div class="form-group">
+        <button class="start-btn"  [disabled]="!canStart()" (click)="startGame()">🎮 Start</button>
+        </div>
     </div>
 </div>

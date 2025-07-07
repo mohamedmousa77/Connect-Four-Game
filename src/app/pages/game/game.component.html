@@ -1,13 +1,15 @@
-<div class="game-container">
+<!-- Starter Modal to choose AI or two players -->
+<app-start-modal *ngIf="showStartModal" (start)="onGameStart($event)"></app-start-modal>
 
+<div class="game-container"  *ngIf="!showStartModal" >
   <!-- Header -->
   <div class="header">
-    <button class="menu-btn"  (click)="toggleRules()">MENU</button>
+    <button class="menu-btn"  (click)="toggleRules()" [disabled]="showStartModal">MENU</button>
     <!-- Feedback while processing the logic -->
     <div *ngIf="gameService.isVsCPU && gameService.currentPlayer === 2 && !gameService.gameOver && gameService.aiDifficulty == 'hard'" class="thinking-msg">
       🤖 The Computer is thinking...
     </div>
-    <button class="restart-btn" (click)="resetGame()">RESTART</button>
+    <button class="restart-btn" (click)="restartGame()" [disabled]="showStartModal">RESTART</button>
   </div>
     
   <!-- Main -->
@@ -15,7 +17,9 @@
 
     <!-- Player 1 -->
     <div class="d-flex timer-wrapper ">
-      <app-turn-timer *ngIf="gameService.showTimerFirstPlayer  && !showStartModal" [player]="1"
+      <app-turn-timer *ngIf="gameService.showTimerFirstPlayer  
+      && !showStartModal" 
+      [player]="1"
       [isActive]="!showStartModal"
       ></app-turn-timer>      
       <div 
@@ -32,7 +36,8 @@
 
     <!-- Player 2 -->
     <div class="d-flex timer-wrapper">
-      <app-turn-timer *ngIf="gameService.showTimerSecondPlayer  && !showStartModal"
+      <app-turn-timer *ngIf="gameService.showTimerSecondPlayer  
+      && !showStartModal"
       [isActive]="!showStartModal"
       [player]="2"
       ></app-turn-timer>
@@ -53,9 +58,6 @@
   [winner]="gameService.winner"
   (playAgain)="resetGame()">
 </app-victory-modal>
-
-<!-- Starter Modal to choose AI or two players -->
-<app-start-modal *ngIf="showStartModal" (start)="onGameStart($event)"></app-start-modal>
 
 <button class="menu-btn" (click)="toggleRules()">📄 Regole</button>
 <app-rules-modal 

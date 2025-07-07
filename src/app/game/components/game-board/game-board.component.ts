@@ -16,13 +16,13 @@ private sub: Subscription | undefined;
 
   constructor(public gameService : GameService) {}
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.board = this.gameService.getBoard();
 
     this.rowIndices = Array.from({ length: this.board.length }, 
       (_, i) => this.board.length - 1 - i);
 
-       this.sub = this.gameService.boardReset$.subscribe(() => {
+      this.sub = this.gameService.boardReset$.subscribe(() => {
       this.board = this.gameService.getBoard();
     });
   }

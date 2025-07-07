@@ -1,63 +1,65 @@
 .modal-overlay {
     position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5); // sfondo semi-trasparente
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 999;
+    align-items: center;
+    z-index: 1000;
 }
 
 .modal-content {
-    background: white;
+    background: #ffffff;
     padding: 2rem;
     border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     width: 90%;
-    max-width: 500px;
+    max-width: 400px;
     text-align: center;
-    box-shadow: 5px 5px 0 #000;
 }
 
-.mode-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
+.form-group {
     margin-bottom: 1rem;
+}
 
-    button {
-        flex: 1;
-        padding: 1rem;
-        font-weight: bold;
-        border-radius: 12px;
-        background: #7b5be7;
+
+.mode-buttons button {
+    margin: 0 0.5rem;
+    padding: 0.8rem 1.5rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+
+    &.active {
+        background-color: #7b5be7;
         color: white;
-        border: none;
-        box-shadow: 0 5px 0 #3b2e93;
-        cursor: pointer;
-
-        &.active {
-        background-color: #543fd7;
-        }
     }
 }
 
-.name-inputs input,
-.cpu-options select {
+input, select {
     width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border-radius: 10px;
-    border: 2px solid #ccc;
-    font-size: 1rem;
+    padding: 0.6rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
 }
 
 .start-btn {
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    background: #ff5678;
+    background-color: #7b5be7;
     color: white;
-    border-radius: 10px;
-    font-weight: bold;
+    padding: 0.8rem 1.5rem;
     border: none;
+    border-radius: 10px;
+    width: 200px;
     cursor: pointer;
+
+    &:disabled {
+        background-color: #b9b9b9;
+        cursor: not-allowed;
+    }
 }

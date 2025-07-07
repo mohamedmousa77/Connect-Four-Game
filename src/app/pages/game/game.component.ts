@@ -31,38 +31,42 @@ export class GameComponent {
   showStartModal = true;
   soundEnabled = true;
 
-
-
   constructor(public gameService: GameService, public storageSer: StorageService) {  }
 
   resetGame() {
     this.gameService.initBoard();
   }
 
+  restartGame() {
+  const confirmed = confirm('Are you sure you want to restart the game? All progress will be lost.');
+
+  if (confirmed) {
+    this.storageSer.cleanStorage();
+    this.showStartModal = true;
+    this.gameService.initBoard();
+  }
+}
+
+
   toggleRules() {
     this.showRules = !this.showRules;
   }
 
-
   onGameStart(
     config: {
-    mode: '2p' | 'cpu',
-    name1: string,
-    name2: string,
-    difficulty: 'easy' | 'hard'
+    isVsCPU: boolean;
+    difficulty: 'easy' | 'hard';
+    names: { 1: string; 2: string } ;
     }) 
     {
     this.showStartModal = false;
 
-    this.storageSer.playerNames[1] = config.name1;
-    this.storageSer.playerNames[2] = config.name2;
-    this.gameService.isVsCPU = config.mode === 'cpu';
-    this.storageSer.saveToStorage(this.gameService.score);
-
-    // (opzionale) salva difficoltà se implementata
+    this.storageSer.playerNames = config.names;
+    this.gameService.isVsCPU = config.isVsCPU;
     this.gameService.aiDifficulty = config.difficulty;
 
-    this.gameService.initBoard();
+    this.storageSer.saveToStorage(this.gameService.score);
+    this.resetGame();
   }
 
 }
