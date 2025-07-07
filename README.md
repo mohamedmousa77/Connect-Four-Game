@@ -1,59 +1,62 @@
-# ConnectFour
+# Connect Four Game 🎮
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
+An interactive **Connect Four** game for the web, playable in your browser with a clean UI and smart AI opponent. Built using **HTML, CSS, and JavaScript**, this project lets you test your strategy skills against a computer that doesn’t go easy on you.
 
-## Development server
+Try to connect four discs in a row before the AI beats you!
 
-To start a local development server, run:
+![image](https://github.com/user-attachments/assets/06b3d9ab-b5d9-4d73-b7c0-34bb924428a9)
 
-```bash
-ng serve
-```
+---
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🎮 Features
 
-## Code scaffolding
+### ✅ Game Mechanics
+Classic Connect 4 Gameplay: Drop discs into a 7×6 grid to connect 4 in a row (vertically, horizontally, or diagonally).
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Two Game Modes:
 
-```bash
-ng generate component component-name
-```
+🧍‍♂️ Two Players: Play locally against another human.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+🤖 Vs Computer (AI): Challenge a computer opponent.
 
-```bash
-ng generate --help
-```
+### Smart AI:
 
-## Building
+🧠 Supports two difficulty levels:
 
-To build the project run:
+Easy (random decisions).
 
-```bash
-ng build
-```
+Hard (AI evaluates board positions strategically).
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+### 🔉 Sound System
+### 💾 Persistence
 
-## Running unit tests
+---
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Game Rules:
 
-```bash
-ng test
-```
+📖 Displays game instructions.
 
-## Running end-to-end tests
+🎵 Toggle to activate/deactivate game sounds.
 
-For end-to-end (e2e) testing, run:
+🧠 Displays current AI difficulty.
 
-```bash
-ng e2e
-```
+🌗 Optionally toggle visual theme (if implemented).
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+## 🛠️ Tecnologie utilizzate
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+### Frontend
+- **Angular 17+**
+- **SCSS / Tailwind CSS**
+- **TypeScript**, Reactive Forms, Routing, Lazy Loading
+
+---
+🙋‍♂️ Author
+
+### Mohamed Mousa
+
+🔗 Portfolio: http://mohamedmousa.it
+
+🔗 LinkedIn:  https://www.linkedin.com/in/mohamedmousa-/
+
