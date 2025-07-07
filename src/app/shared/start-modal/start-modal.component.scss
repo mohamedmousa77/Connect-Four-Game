@@ -10,6 +10,29 @@
     align-items: center;
     z-index: 1000;
 }
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+}
+
+// .logo {
+//     width: 80px;
+//     // margin-bottom: 0.5rem;
+//     animation: bounce 1.5s infinite;
+// }
 
 .modal-content {
     background: #ffffff;
@@ -55,11 +78,24 @@ input, select {
     padding: 0.8rem 1.5rem;
     border: none;
     border-radius: 10px;
-    width: 200px;
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
     cursor: pointer;
 
     &:disabled {
         background-color: #b9b9b9;
         cursor: not-allowed;
+    }
+}
+.footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #666;
+
+    strong {
+        font-weight: 600;
+        color: #333;
     }
 }

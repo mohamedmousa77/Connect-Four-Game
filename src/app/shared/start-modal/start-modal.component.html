@@ -1,6 +1,9 @@
 <div class="modal-overlay">
     <div class="modal-content">
-        <h2>Welcome to Connect 4 Game</h2>
+        <div class="header-wrapper">
+            <img src="logo-2.png" alt="Logo" class="logo" />
+            <h2>Welcome to Connect 4 Game</h2>
+        </div>      
 
         <div class="form-group mode-buttons">
             <button [class.active]="isVsCPU === false" [class.selected]="isVsCPU === false" (click)="onSelectMode('two') ">
@@ -31,5 +34,6 @@
         <div class="form-group">
         <button class="start-btn"  [disabled]="!canStart()" (click)="startGame()">🎮 Start</button>
         </div>
+        <p class="footer">Operated by <strong>Mohamed Mousa</strong> </p>
     </div>
 </div>
