@@ -1,6 +1,6 @@
 # Connect Four Game 🎮
 
-An interactive **Connect Four** game for the web, playable in your browser with a clean UI and smart AI opponent. Built using **HTML, CSS, and JavaScript**, this project lets you test your strategy skills against a computer that doesn’t go easy on you.
+An interactive **Connect Four** game for the web, playable in your browser with a clean UI and smart AI opponent. Built using **Angular, TypeScript and CSS**, this project lets you test your strategy skills against a computer that doesn’t go easy on you.
 
 Try to connect four discs in a row before the AI beats you!
 
